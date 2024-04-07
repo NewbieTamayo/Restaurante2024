@@ -1,13 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Negocio;
 
-/**
- *
- * @author carlo
- */
 public class cls_validar_pedido {
+    private boolean val = false;
+    private String msn;
     
+    public void validarDatosEntrada(
+    String id, String det, String total
+    ){
+        if(id.equals("")||det.equals("")||total.equals("")){
+            this.msn = "Debe ingresar todos los datos";
+        }else{
+            this.val = true;
+            this.msn = "El pedido ha sido registrado con éxito";
+        }
+    }
+    
+    public String getMsn(){return this.msn;}
+    public boolean getVal(){return this.val;}
 }

@@ -5,16 +5,21 @@
 package Presentacion;
 
 import Datos.cls_clientes;
+import Datos.cls_pedidos;
 import java.util.LinkedList;
 import Negocio.cls_validar_cliente;
+import Negocio.cls_validar_pedido;
 import javax.swing.JOptionPane;
 public class frm_Restaurante extends javax.swing.JFrame {
     LinkedList <cls_clientes> clientes = new LinkedList<>();//Lista de clientes
+     LinkedList <cls_pedidos> pedidos = new LinkedList<>();//Lista de pedidos
     cls_validar_cliente objValidar = new cls_validar_cliente();//Instancia unica
+    cls_validar_pedido objValidar2 = new cls_validar_pedido();//Instancia unica
     //Instancia unica y multiple, para el parcial.
     //Lista multiple cada una de ellos tiene una memoria diferente
     //Instancia unica ya esta preestablecida
     boolean sw;
+    int activo=0;
     int posicion;
  
     public frm_Restaurante() {
@@ -45,18 +50,18 @@ public class frm_Restaurante extends javax.swing.JFrame {
         btn_cambiarestado = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        txt_id1 = new javax.swing.JTextField();
+        txt_id2 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txt_nombres1 = new javax.swing.JTextField();
+        txt_nombres2 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         btn_nuevopedido = new javax.swing.JButton();
         btn_guardarpedido = new javax.swing.JButton();
         btn_consultarcliente = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txt_detalleorden = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
-        txt_id2 = new javax.swing.JTextField();
+        txt_totalpagar = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -218,7 +223,7 @@ public class frm_Restaurante extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -229,15 +234,16 @@ public class frm_Restaurante extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel7.setText("Identificación:");
 
-        txt_id1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        txt_id1.setNextFocusableComponent(txt_nombres);
+        txt_id2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txt_id2.setNextFocusableComponent(txt_totalpagar);
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel8.setText("Nombres:");
 
-        txt_nombres1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        txt_nombres1.setEnabled(false);
-        txt_nombres1.setNextFocusableComponent(txt_contacto);
+        txt_nombres2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txt_nombres2.setEnabled(false);
+        txt_nombres2.setFocusable(false);
+        txt_nombres2.setNextFocusableComponent(txt_contacto);
 
         jPanel6.setBackground(new java.awt.Color(162, 210, 255));
 
@@ -251,6 +257,7 @@ public class frm_Restaurante extends javax.swing.JFrame {
         });
 
         btn_guardarpedido.setText("Guardar pedido");
+        btn_guardarpedido.setEnabled(false);
         btn_guardarpedido.setFocusable(false);
         btn_guardarpedido.setPreferredSize(new java.awt.Dimension(75, 29));
         btn_guardarpedido.addActionListener(new java.awt.event.ActionListener() {
@@ -276,8 +283,8 @@ public class frm_Restaurante extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_nuevopedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_guardarpedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .addComponent(btn_consultarcliente, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
+                    .addComponent(btn_guardarpedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                    .addComponent(btn_consultarcliente, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -295,15 +302,17 @@ public class frm_Restaurante extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel9.setText("Total a pagar:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txt_detalleorden.setColumns(20);
+        txt_detalleorden.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txt_detalleorden.setLineWrap(true);
+        txt_detalleorden.setRows(5);
+        jScrollPane1.setViewportView(txt_detalleorden);
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel10.setText("Detalle Orden:");
 
-        txt_id2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        txt_id2.setNextFocusableComponent(txt_nombres);
+        txt_totalpagar.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txt_totalpagar.setNextFocusableComponent(txt_id2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -317,19 +326,21 @@ public class frm_Restaurante extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_id2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_totalpagar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGap(2, 2, 2))))
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel7)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txt_id1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_id2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel8)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txt_nombres1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(49, 49, 49)
+                            .addComponent(txt_nombres2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -338,19 +349,19 @@ public class frm_Restaurante extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
-                    .addComponent(txt_id1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_id2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txt_nombres1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombres2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txt_id2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_totalpagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11))
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -376,7 +387,7 @@ public class frm_Restaurante extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel6)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Información", jPanel4);
@@ -395,8 +406,8 @@ public class frm_Restaurante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
 
         pack();
@@ -416,20 +427,51 @@ public class frm_Restaurante extends javax.swing.JFrame {
 
     private void btn_cambiarestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarestadoActionPerformed
         fnt_consultar(txt_id.getText(),"2");
-        JOptionPane.showMessageDialog(null, clientes.get(posicion).getEstado());
+        //JOptionPane.showMessageDialog(null, clientes.get(posicion).getEstado());
     }//GEN-LAST:event_btn_cambiarestadoActionPerformed
 
     private void btn_nuevopedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevopedidoActionPerformed
-        // TODO add your handling code here:
+        fnt_nuevopedido();
     }//GEN-LAST:event_btn_nuevopedidoActionPerformed
 
     private void btn_guardarpedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarpedidoActionPerformed
-        // TODO add your handling code here:
+        fnt_guardar_pedido();
     }//GEN-LAST:event_btn_guardarpedidoActionPerformed
 
     private void btn_consultarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarclienteActionPerformed
-        // TODO add your handling code here:
+        fnt_consultar(txt_id2.getText(), "3");
     }//GEN-LAST:event_btn_consultarclienteActionPerformed
+     private void fnt_guardar_pedido(){
+         fnt_consultar(txt_id2.getText(), "4");
+         if(activo==0)
+         {
+             JOptionPane.showMessageDialog(null, "Error, el cliente se encuentra inactivo");
+         }
+         if(activo==1)
+         {
+              objValidar2.validarDatosEntrada(txt_id2.getText(),
+                txt_detalleorden.getText(),
+               txt_totalpagar.getText());
+        if(objValidar2.getVal()==true)
+        {
+            pedidos.add(new cls_pedidos(txt_id2.getText(),txt_detalleorden.getText(),
+            Float.parseFloat(txt_totalpagar.getText())));
+        }  
+        JOptionPane.showMessageDialog(null, objValidar2.getMsn());
+         }
+         
+       
+          
+    }
+    private void fnt_nuevopedido()
+    {
+        txt_id2.setText("");
+        txt_nombres2.setText("");
+        txt_detalleorden.setText("");
+        txt_totalpagar.setText("");
+        txt_id2.requestFocus();
+        btn_guardarpedido.setEnabled(false);
+    }   
     private void fnt_consultar(String id,String tipo){
         sw = false;
         posicion = 0;
@@ -444,7 +486,16 @@ public class frm_Restaurante extends javax.swing.JFrame {
            
         }
         if(sw==false){
-            JOptionPane.showMessageDialog(null, "No se encontraron datos");
+            if(!tipo.equals("4"))
+            {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos");
+            }
+            
+            if(tipo.equals("3"))
+            {
+                txt_nombres2.setText("");
+            }
+            
         }else{
             if(tipo.equals("1"))
             {
@@ -455,7 +506,16 @@ public class frm_Restaurante extends javax.swing.JFrame {
             if(tipo.equals("2")){
                 clientes.get(posicion).setEstado(1);
                 JOptionPane.showMessageDialog(null, "Estado actualizado");
-            }        
+            } 
+            if(tipo.equals("3")){
+                btn_guardarpedido.setEnabled(true);
+                txt_nombres2.setText(clientes.get(posicion).getNombreStr());
+            }
+            if(tipo.equals("4")){
+                activo = clientes.get(posicion).getEstado();
+          
+                
+            }
         }
     }
     
@@ -541,13 +601,13 @@ public class frm_Restaurante extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txt_contacto;
     private javax.swing.JTextField txt_correo;
+    private javax.swing.JTextArea txt_detalleorden;
     private javax.swing.JTextField txt_id;
-    private javax.swing.JTextField txt_id1;
     private javax.swing.JTextField txt_id2;
     private javax.swing.JTextField txt_nombres;
-    private javax.swing.JTextField txt_nombres1;
+    private javax.swing.JTextField txt_nombres2;
+    private javax.swing.JTextField txt_totalpagar;
     // End of variables declaration//GEN-END:variables
 }
