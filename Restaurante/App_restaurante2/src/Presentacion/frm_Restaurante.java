@@ -106,6 +106,11 @@ public class frm_Restaurante extends javax.swing.JFrame {
 
         txt_nombres.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         txt_nombres.setNextFocusableComponent(txt_contacto);
+        txt_nombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nombresKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel4.setText("Contacto:");
@@ -118,6 +123,11 @@ public class frm_Restaurante extends javax.swing.JFrame {
 
         txt_correo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         txt_correo.setNextFocusableComponent(txt_id);
+        txt_correo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_correoKeyTyped(evt);
+            }
+        });
 
         jPanel5.setBackground(new java.awt.Color(162, 210, 255));
 
@@ -244,6 +254,11 @@ public class frm_Restaurante extends javax.swing.JFrame {
         txt_nombres2.setEnabled(false);
         txt_nombres2.setFocusable(false);
         txt_nombres2.setNextFocusableComponent(txt_contacto);
+        txt_nombres2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nombres2KeyTyped(evt);
+            }
+        });
 
         jPanel6.setBackground(new java.awt.Color(162, 210, 255));
 
@@ -306,6 +321,11 @@ public class frm_Restaurante extends javax.swing.JFrame {
         txt_detalleorden.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         txt_detalleorden.setLineWrap(true);
         txt_detalleorden.setRows(5);
+        txt_detalleorden.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_detalleordenKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txt_detalleorden);
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
@@ -418,7 +438,14 @@ public class frm_Restaurante extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        if(fnt_id(txt_id.getText())&&fnt_nombre(txt_nombres.getText())&&fnt_contacto(txt_contacto.getText())&&fnt_correoelectronico(txt_correo.getText()))
+            {
         fnt_guardar_cliente();
+    }else
+        {
+            JOptionPane.showMessageDialog(null, "Error, llena todos los campos correctamente.");
+        }
+        
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void btn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarActionPerformed
@@ -435,12 +462,43 @@ public class frm_Restaurante extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_nuevopedidoActionPerformed
 
     private void btn_guardarpedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarpedidoActionPerformed
-        fnt_guardar_pedido();
+        if(fnt_id(txt_id2.getText())&&fnt_detorden(txt_detalleorden.getText())&&fnt_total(txt_totalpagar.getText()))
+        {
+            fnt_guardar_pedido();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Error, llena todos los campos correctamente.");
+        }
     }//GEN-LAST:event_btn_guardarpedidoActionPerformed
 
     private void btn_consultarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarclienteActionPerformed
         fnt_consultar(txt_id2.getText(), "3");
     }//GEN-LAST:event_btn_consultarclienteActionPerformed
+
+    private void txt_nombres2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombres2KeyTyped
+        char caracter = evt.getKeyChar();
+        if(Character.isLowerCase(caracter)){
+        evt.setKeyChar(Character.toUpperCase(caracter));}
+    }//GEN-LAST:event_txt_nombres2KeyTyped
+
+    private void txt_detalleordenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_detalleordenKeyTyped
+        char caracter = evt.getKeyChar();
+        if(Character.isLowerCase(caracter)){
+        evt.setKeyChar(Character.toUpperCase(caracter));}
+    }//GEN-LAST:event_txt_detalleordenKeyTyped
+
+    private void txt_nombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombresKeyTyped
+        char caracter = evt.getKeyChar();
+        if(Character.isLowerCase(caracter)){
+        evt.setKeyChar(Character.toUpperCase(caracter));}
+    }//GEN-LAST:event_txt_nombresKeyTyped
+
+    private void txt_correoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_correoKeyTyped
+        char caracter = evt.getKeyChar();
+        if(Character.isLowerCase(caracter)){
+        evt.setKeyChar(Character.toUpperCase(caracter));}
+    }//GEN-LAST:event_txt_correoKeyTyped
      private void fnt_guardar_pedido(){
          fnt_consultar(txt_id2.getText(), "4");
          if(activo==0)
@@ -465,6 +523,7 @@ public class frm_Restaurante extends javax.swing.JFrame {
     }
     private void fnt_nuevopedido()
     {
+        txt_id2.setEnabled(true);
         txt_id2.setText("");
         txt_nombres2.setText("");
         txt_detalleorden.setText("");
@@ -508,6 +567,7 @@ public class frm_Restaurante extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Estado actualizado");
             } 
             if(tipo.equals("3")){
+                txt_id2.setEnabled(false);
                 btn_guardarpedido.setEnabled(true);
                 txt_nombres2.setText(clientes.get(posicion).getNombreStr());
             }
@@ -520,20 +580,33 @@ public class frm_Restaurante extends javax.swing.JFrame {
     }
     
     private void fnt_guardar_cliente(){
-        objValidar.validarDatosEntrada(txt_id.getText(),
+        fnt_consultar(txt_id.getText(), "4");
+        if(sw==false)
+        {
+              objValidar.validarDatosEntrada(txt_id.getText(),
                 txt_nombres.getText(),
                 txt_contacto.getText(),
                txt_correo.getText());
         if(objValidar.getVal()==true)
         {
+            btn_guardar.setEnabled(false);
             clientes.add(new cls_clientes(txt_id.getText(),txt_nombres.getText(),
             txt_contacto.getText(),txt_correo.getText()));
         }  
         JOptionPane.showMessageDialog(null, objValidar.getMsn());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Error, El ID : "+txt_id.getText()+" Ya existe!");
+        } 
+           
+        
+      
           
     }
     private void fnt_limpiar()
     {
+        btn_guardar.setEnabled(true);
         txt_id.setText("");
         txt_nombres.setText("");
         txt_correo.setText("");
@@ -543,6 +616,59 @@ public class frm_Restaurante extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+     private static boolean fnt_id(String numero) {
+          if (numero == null || numero.isEmpty()) {
+            return false;
+        } else {
+        return numero.matches("[0-9]{10}");
+          }
+    }
+     private static boolean fnt_total(String total) {
+          if (total == null || total.isEmpty()) {
+            return false;
+        } else {
+        return total.matches("[0-9]+$");
+          }
+    }
+
+  private static boolean fnt_contacto(String contacto) {
+        if (contacto == null || contacto.isEmpty()) {
+            return false;
+        } else {
+            return contacto.matches("[0-9]{10}");
+        }
+
+    }
+
+ private static boolean fnt_nombre(String nombre) {
+
+        if (nombre == null || nombre.isEmpty()) {
+            return false;
+        } else {
+            return nombre.matches("^([A-Z,.\\s]+)$");
+        }
+
+    }
+  private static boolean fnt_detorden(String detorden) {
+
+        if (detorden == null || detorden.isEmpty()) {
+            return false;
+        } else {
+            return detorden.matches("^([A-Z,.\\s]+)$");
+        }
+
+    }
+
+
+  private static boolean fnt_correoelectronico(String correoelectronico) {
+
+        if (correoelectronico == null || correoelectronico.isEmpty()) {
+            return false;
+        } else {
+            return correoelectronico.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        }
+
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
